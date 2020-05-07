@@ -68,9 +68,16 @@ function App() {
       <div>
         {timerState === 'START' ? <button onClick={handleStop}>STOP</button> : <button onClick={handleStart}>START</button>}
       </div>
+
       <div>
-        {timerState === 'STOP' && <button onClick={handleBreak5}>SHORT BREAK</button>}
-        {timerState === 'STOP' && <button onClick={handleBreak15}>LONG BREAK</button>}
+        <div>
+          {timerState === 'STOP' && <button onClick={handleBreak5}>SHORT BREAK</button>}
+        </div>
+
+        <div>
+          {timerState === 'STOP' && <button onClick={handleBreak15}>LONG BREAK</button>}
+        </div>
+
       </div>
 
 
