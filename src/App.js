@@ -4,10 +4,9 @@ import './App.css';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './theme';
 import moment from 'moment'
-import momentDurationFormatSetup from 'moment-duration-format'
-
-
 import { createGlobalStyle } from 'styled-components';
+import Switch from "react-switch";
+
 
 export const GlobalStyles = createGlobalStyle`
   *,
@@ -43,6 +42,7 @@ function App() {
   const [session, setSession] = useState("POMODORO")
   const [timeLeft, setTimeLeft] = useState(60 * 25)
   const [theme, setTheme] = useState('light')
+  const [checked, setChecked] = useState(false)
 
   const formattedTimeLeft = moment.duration(timeLeft, 's').format('mm:ss', { trim: false })
 
@@ -108,6 +108,11 @@ function App() {
     }
   }
 
+  const toggleButton = () => {
+    setChecked(!checked)
+    toggleTheme()
+  }
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <div className="App">
@@ -128,7 +133,7 @@ function App() {
 
         </div>
 
-        <button onClick={toggleTheme}>Toggle Theme</button>
+        <Switch checked={checked} onChange={toggleButton} />
 
 
 
