@@ -133,7 +133,26 @@ function App() {
 
         </div>
 
-        <Switch checked={checked} onChange={toggleButton} />
+        <Switch checked={checked} onChange={toggleButton} checkedIcon={
+          <span
+            style={{ fontSize: "0.8rem", marginLeft: "0.2rem" }}
+            role="img"
+            aria-label="sun"
+          >
+            🌞
+          </span>
+        }
+          onColor="#242424"
+          uncheckedIcon={
+            <span
+              style={{ fontSize: "0.8rem", marginLeft: "0.3rem" }}
+              role="img"
+              aria-label="moon"
+            >
+              🦉
+                    </span>
+          }
+        />
 
 
 
