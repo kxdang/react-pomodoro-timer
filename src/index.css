@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App-breakbuttons {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  padding: 1rem 2rem
+  
+}

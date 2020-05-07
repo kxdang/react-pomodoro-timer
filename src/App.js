@@ -1,9 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import TimeLeft from './TimeLeft'
 import './App.css';
-
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './theme';
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
+
+
+import { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyles = createGlobalStyle`
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  body {
+    align-items: center;
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    transition: all 0.25s linear;
+
+    button{
+      background: ${({ theme }) => theme.text};
+      color: ${({ theme }) => theme.body};
+    }
+  }`
+
 
 
 function App() {
@@ -11,6 +42,7 @@ function App() {
   const [intervalId, setIntervalId] = useState(null)
   const [session, setSession] = useState("POMODORO")
   const [timeLeft, setTimeLeft] = useState(60 * 25)
+  const [theme, setTheme] = useState('light')
 
   const formattedTimeLeft = moment.duration(timeLeft, 's').format('mm:ss', { trim: false })
 
@@ -19,8 +51,13 @@ function App() {
 
   }, [timeLeft])
 
-  const handleStart = () => {
+  const handleStartPomodoro = () => {
+    setTimeLeft(60 * 25)
+    setSession('POMODORO')
+    handleStart()
+  }
 
+  const handleStart = () => {
     const id = setInterval(() => {
       setTimeLeft((timeLeft) => {
         const newTimeLeft = timeLeft - 1
@@ -30,7 +67,7 @@ function App() {
         }
 
         clearInterval(id)
-        setTimeLeft(60 * 25)
+        // setTimeLeft(60 * 25)
         setTimerState('STOP')
 
       })
@@ -58,31 +95,45 @@ function App() {
   const handleBreak15 = () => {
     setTimeLeft(15)
     handleStart()
-    setSession('BREAK')
+    setSession('LONG BREAK')
+  }
 
+  const toggleTheme = () => {
+    // if the theme is not light, then set it to dark
+    if (theme === 'light') {
+      setTheme('dark');
+      // otherwise, it should be light
+    } else {
+      setTheme('light');
+    }
   }
 
   return (
-    <div className="App">
-      <TimeLeft time={timeLeft} sessionTitle={session} />
-      <div>
-        {timerState === 'START' ? <button onClick={handleStop}>STOP</button> : <button onClick={handleStart}>START</button>}
-      </div>
-
-      <div>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <div className="App">
+        <GlobalStyles />
+        <TimeLeft time={timeLeft} isCompleted={timerState === 'STOP'} sessionTitle={session} />
         <div>
-          {timerState === 'STOP' && <button onClick={handleBreak5}>SHORT BREAK</button>}
+          {timerState === 'START' ? <button onClick={handleStop}>STOP</button> : <button onClick={handleStartPomodoro}>START POMO</button>}
         </div>
 
-        <div>
-          {timerState === 'STOP' && <button onClick={handleBreak15}>LONG BREAK</button>}
+        <div className="App-breakbuttons">
+          <div>
+            {timerState === 'STOP' && <button onClick={handleBreak5}>SHORT BREAK</button>}
+          </div>
+
+          <div>
+            {timerState === 'STOP' && <button onClick={handleBreak15}>LONG BREAK</button>}
+          </div>
+
         </div>
 
-      </div>
+        <button onClick={toggleTheme}>Toggle Theme</button>
 
 
 
-    </div >
+      </div >
+    </ThemeProvider>
   );
 }
 
