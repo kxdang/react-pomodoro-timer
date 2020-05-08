@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import TimeLeft from './TimeLeft'
-import './App.css';
+import Quoteblock from './Quoteblock'
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './theme';
-import moment from 'moment'
 import { createGlobalStyle } from 'styled-components';
+import moment from 'moment'
 import Switch from "react-switch";
-
+import './App.css';
 
 export const GlobalStyles = createGlobalStyle`
   *,
@@ -87,13 +87,13 @@ function App() {
   }
 
   const handleBreak5 = () => {
-    setTimeLeft(5)
+    setTimeLeft(60 * 5)
     handleStart()
     setSession('BREAK')
   }
 
   const handleBreak15 = () => {
-    setTimeLeft(15)
+    setTimeLeft(60 * 15)
     handleStart()
     setSession('LONG BREAK')
   }
@@ -117,6 +117,8 @@ function App() {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <div className="App">
         <GlobalStyles />
+        <Quoteblock />
+
         <TimeLeft time={timeLeft} isCompleted={timerState === 'STOP'} sessionTitle={session} />
         <div>
           {timerState === 'START' ? <button onClick={handleStop}>STOP</button> : <button onClick={handleStartPomodoro}>START POMO</button>}
@@ -145,7 +147,7 @@ function App() {
           onColor="#242424"
           uncheckedIcon={
             <span
-              style={{ fontSize: "0.8rem", marginLeft: "0.3rem" }}
+              style={{ fontSize: "0.8rem", marginLeft: "0.2rem" }}
               role="img"
               aria-label="moon"
             >
