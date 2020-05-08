@@ -9,7 +9,7 @@ Created: May 4th 2020
 
 
 <p align="center">
-  <a href="https://kien-pomodoro-timer.netlify.app/"><img src="./project.png"></a>
+  <a href="https://kien-pomodoro-timer.netlify.app/"><img src="./project.gif"></a>
 </p>
 
 ## 👨‍🎓What I learned:
