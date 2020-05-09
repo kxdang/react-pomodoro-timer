@@ -31,6 +31,7 @@ export const GlobalStyles = createGlobalStyle`
     button{
       background: ${({ theme }) => theme.text};
       color: ${({ theme }) => theme.body};
+      margin: 0 0.5rem;
     }
   }`
 
